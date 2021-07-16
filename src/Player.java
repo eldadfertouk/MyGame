@@ -10,7 +10,7 @@ public class Player extends JPanel {
     private Munitions playerAmmo;
     private List <Munitions> playerAmmoList;
 
-    //create dufalt player
+    //create default player
     public Player() {
         this.playerName = "new player";
         this.playerType = "default";

@@ -14,45 +14,35 @@ public class DifficultyLevelPanel extends JPanel
 
     public DifficultyLevelPanel() {
         super(new BorderLayout());
-
         //Create the radio buttons.
         JRadioButton hardButton = new JRadioButton(hradString);
         hardButton.setFont(font);
         hardButton.setMnemonic(KeyEvent.VK_B);
         hardButton.setActionCommand(hradString);
         hardButton.setSelected(true);
-
         JRadioButton normalButton = new JRadioButton(normalString);
         normalButton.setFont(font);
         normalButton.setMnemonic(KeyEvent.VK_C);
         normalButton.setActionCommand(normalString);
-
         JRadioButton easyButton = new JRadioButton(easyString);
         easyButton.setFont(font);
         easyButton.setMnemonic(KeyEvent.VK_D);
         easyButton.setActionCommand(easyString);
-
-
         //Group the radio buttons.
         ButtonGroup difficultyGroup = new ButtonGroup();
         difficultyGroup.add(hardButton);
         difficultyGroup.add(normalButton);
         difficultyGroup.add(easyButton);
         normalButton.setSelected(true);
-
         //Register a listener for the radio buttons.
         hardButton.addActionListener(this);
         normalButton.addActionListener(this);
         easyButton.addActionListener(this);
-
         //Set up the picture label.
         picture = new JLabel(createImageIcon("\\images\\difficulty\\"
                 + normalString
                 + ".gif"));
-
         picture.setPreferredSize(new Dimension(100, 100));
-
-
         //Put the radio buttons in a column in a panel.
         JPanel difficultyPanel = new JPanel(new GridLayout(0, 1));
         difficultyPanel.setFont(font);
@@ -66,7 +56,7 @@ public class DifficultyLevelPanel extends JPanel
 
 
     public void actionPerformed(ActionEvent e) {
-        difficultyLevel=e.getActionCommand();
+        difficultyLevel=e.paramString();
         picture.setIcon(createImageIcon("\\images\\difficulty\\"
                 + e.getActionCommand()
                 + ".gif"));

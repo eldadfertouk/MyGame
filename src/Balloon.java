@@ -48,7 +48,10 @@ public class Balloon extends Target{
 
     public void setBalloonIcon(ImageIcon balloonIcon, String balloonColor)
     {
-        while (balloonColor!="null");
+        while (true) {
+            if (balloonColor == "null") break;
+            ;
+        }
         switch (balloonColor){
             case "red":
                 this.balloonIcon = new ImageIcon(this.getClass().getResource("/images/targets/redballoon.png"));

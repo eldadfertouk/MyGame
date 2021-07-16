@@ -4,12 +4,15 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-import static sun.jvm.hotspot.runtime.PerfMemory.start;
-
 public class Level extends JPanel {
     //set static variables
-    private int SCREEN_WIDTH = 960, SCREEN_HIGHT = 780, TARGETS_COUNTS = 50, FITHER_SPEED = 1, TARGET_SPEED = 250, AMMO_COUNT = 50, MUNITION_TOTAL = 50;
+    private int TARGETS_COUNTS = 50;
+    private int TARGET_SPEED = 250;
+    private int AMMO_COUNT = 50;
+    private int MUNITION_TOTAL = 50;
+    private int TOTAL_ROCKETS = 50;
     //set static threads
+    private String TARGET_TYPE = "defaulttarget";
     private static Thread trgetsMotion, fighterMotion, ammoUse, soundTrack;
     //set int variables
     private int playerSpeed = 1, score = 0, shotsFierd = 0, arrowSpeed = 1, ammoSpeed = 5, targetSpeed = 250;
@@ -37,16 +40,17 @@ public class Level extends JPanel {
     private List <HotAirBalloon> hotAirBalloons;
     private List <Munitions> weapons;
     private List <Target> targetsList;
-    private List <Rocket> rockets;
+    private List<Munitions> rockets;
     //create text fields
     private JTextField ammoField, targetsField, scoresField, ammoRemain;
     private MatchConfig matchConfig;
-
     public Level(MatchConfig matchConfig){
         TARGETS_COUNTS = matchConfig.getTargets();
+        TARGET_TYPE = "defaulttarget";
         AMMO_COUNT = matchConfig.getAmmo();
         int DIFFICULTY = matchConfig.getLevel();
-        int FIGTHER_SPEED = 1; TARGET_SPEED = 250;  MUNITION_TOTAL = 50;
+        int FIGTHER_SPEED = 1; TARGET_SPEED = 250;  MUNITION_TOTAL = 50;TOTAL_ROCKETS = 50;
+
     }
     public Level(int stage) {
         mainPanel.setLayout(null);
@@ -57,8 +61,8 @@ public class Level extends JPanel {
         explosion = new Explosion(0, 0);
         weapons = new ArrayList <>();
         hotAirBalloons = new ArrayList <>();
-        targetsList = new ArrayList <>();
-        rockets = new ArrayList <>();
+        targetsList = new ArrayList <Target>();
+        rockets = new ArrayList<Munitions>();
         mouse = new Mouse();
         this.addMouseMotionListener(mouse);
         shoot = new Shoot();
@@ -69,8 +73,10 @@ public class Level extends JPanel {
         this.addMouseMotionListener(scopeSightListener);
         mousePoint = new Point(mouse.getxMouseCordinta(), mouse.getyMouseCordinta());
         JOptionPane.showMessageDialog(this,"Level: "+stage);
+        this.TARGET_TYPE = "hotairballoon";
 //create targets
         for (int i = 0; i <= TARGETS_COUNTS; i++) {
+            //Target target = new Target(this.TARGET_TYPE,this.targetsList.size(),true);
             Target target = new Target();
             this.targetsList.add(target);
             this.setVisible(true);
@@ -81,10 +87,14 @@ public class Level extends JPanel {
             weapons.add(weapon);
           //  System.out.println(weapon.toString());
         }
+        for (int r = 1; r <= TOTAL_ROCKETS;r++){
+            Munitions rocket = new Munitions("rocket");
+            rockets.add(rocket);
+        }
 //move target
         new Thread(() -> {
             try {
-                while (true) {
+                while (!targetsList.isEmpty()) {
                     for (Target target : targetsList) {
                         target.TargetMoveRandom(); }
                     Thread.sleep(targetSpeed);
@@ -128,7 +138,7 @@ public class Level extends JPanel {
 //arrow
  new Thread(() -> {
             try {
-                while (weapons.size()>-1) {
+                while (true) {
                    switch (shoot.getClick()) {
                         case 1:
                             for (Target target : targetsList) {
@@ -159,37 +169,6 @@ public class Level extends JPanel {
            } catch (Exception e) {
             }
        }).start();
-
-  /*      new Thread(()->{
-            try {
-                for (Target target : targetsList) {
-                    scopePoint.setLocation(scopeSightListener.getMousePoint());
-                    if(!scopePoint.isPointInside(mousePoint,target.getX(), target.getY())){
-                        System.out.println("GOOD VERY GOOD"); }
-                        System.out.println(":" + scopePoint + ":" + ":" + scope.getWidth() + ":" + ": " + ":" + ":" + scope.getHeight() + ":" + ":" + target.getTargetWide() + ":" + ":" + target.getTargetHeight() + ":" + ":" + target.getTargetLocation());
-                    if (!scopePoint.isSightOnTarget(scopePoint, scope.getWidth(), scope.getHeight(), target.getTargetWide(), target.getTargetHeight(), target.getTargetLocation()))
-                        target.setRadarLockOn(true);
-                    System.out.println("LOCKON" + target);
-                    weapons.get(0).MunitionUse(weapons.get(0), playerLocation, scopePoint);
-                    shotsFierd += 1;
-                    //        break;
-                   //     case 2:
-                    System.out.println("STAM BDIKA 2");
-                   //         break;
-                 //       case 3:
-                    System.out.println("click 3");
-
-                    //break;
-                    }
-                /*    if (weapons.get(0).getX() < -10) {
-                        shoot.setClick(0);
-                        weapons.remove(0);
-                    }
-                    repaint();
-                    Thread.sleep(ammoSpeed);
-
-            } catch (Exception e) {
-            }}).start();*/
 //mouse listner
 //keyboard listner for fighter movement
 // players
@@ -219,7 +198,10 @@ public class Level extends JPanel {
                             break;
                         case 76:
                             for (Target target:targetsList) {
-                                if (scopePoint.getxCordinta()<=target.getX()&& scopePoint.getyCordinta()<=target.getY());{
+                                if (scopePoint.getxCordinta() <= target.getX()) {
+                                    target.getY();
+                                }
+                                {
                                     System.out.println("LockOn");
                             }
                         }
@@ -315,7 +297,7 @@ public class Level extends JPanel {
             int l=(Integer.parseInt(s));
                     Level game = new Level(l);
         }
-        Level game = new Level(0);
+        Level game = new Level(1);
 
     }
 

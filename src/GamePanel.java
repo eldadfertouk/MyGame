@@ -3,6 +3,8 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.Thread.sleep;
+
 public class GamePanel extends JPanel {
     public int SCREEN_WIDTH = 960;
     public int SCREEN_HIGHT = 720;
@@ -44,7 +46,6 @@ public class GamePanel extends JPanel {
         keyMazin = new KeyMazin();
         this.addKeyListener(keyMazin);
         keyPressed = keyMazin.getKeyCode();
-
         for (int i = 0; i < BALOON_COUNT; i++) {
             Target target = new Target();
             targetList.add(target);
@@ -63,13 +64,14 @@ public class GamePanel extends JPanel {
             try {
                 SoundTrack wind = new SoundTrack();
                 wind.SoundTrack("wind");
-                Thread.sleep(1);
+                sleep(1);
             } catch (Exception e) {
+                SoundTrack inflateBaloonSound = new SoundTrack();
+                inflateBaloonSound.SoundTrack("inflate");
             }
         }).start();
-        //arrow
-
-      //  int mikum = player.getXTurtle();
+      //arrow
+    //  int mikum = player.getXTurtle();
         new Thread(() -> {
             try {
                 while (ammo.size()>-1) {
@@ -88,25 +90,25 @@ public class GamePanel extends JPanel {
                         ammo.remove(0);
                     }
                     repaint();
-                    Thread.sleep(0,arrowSpeed*2);
+                    sleep(0,arrowSpeed*2);
                 }
             } catch (Exception e) {
+                Thread.dumpStack();
             }
         }).start();
 
         new Thread(() -> {
             try {
-                while (true) {
+                while (!balloons.isEmpty()) {
                     for (Target target:this.targetList) {
                         target.TargetMoveRandom();
                     }
                     repaint();
-
                     for (Balloon balloon : this.balloons) {
                         balloon.moveBalloon();
                     }
                     repaint();
-                    Thread.sleep(balloonSpeed);
+                    sleep(balloonSpeed);
                     //remove balloons from screen
                     if (balloonSpeed < 50) {
                         if (balloons.size()>=1){
@@ -154,7 +156,7 @@ public class GamePanel extends JPanel {
 
                     }
                     repaint();
-                    Thread.sleep(turtulespeed);
+                    sleep(turtulespeed);
                 }
             } catch (Exception e) {
             }
@@ -163,7 +165,7 @@ public class GamePanel extends JPanel {
             try {
             while (impactpoint.getxCordinta()*impactpoint.getyCordinta()!=1){
                     explosion.createExplosion(impactpoint);
-                    Thread.sleep(2500);
+                    sleep(2500);
                     repaint();
             }
             }catch (Exception e){}
@@ -268,6 +270,7 @@ public class GamePanel extends JPanel {
         this.setFocusable(true);
         this.requestFocus();
         }
-
+public static void main(String[] args){
+        GamePanel gamePanel = new GamePanel();
+}
     }
-

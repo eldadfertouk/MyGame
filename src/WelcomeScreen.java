@@ -9,19 +9,19 @@ public class WelcomeScreen extends JFrame implements ActionListener
     JButton quit = new JButton("QUIT");
     JButton options = new JButton("OPTIONS");
     ImageIcon reka = new ImageIcon(this.getClass().getResource("/images/intro.gif"));
-    ImageIcon turtuleIcoon = new ImageIcon(this.getClass().getResource("images/icons/turtliconss.png"));
+    ImageIcon turtuleIcon = new ImageIcon(this.getClass().getResource("images/icons/turtliconss.png"));
     JOptionPane optionPane;
+    MatchConfig currentUserConfiguration;
     public WelcomeScreen()   // the constructor
     {
         super("INTRO");
-
         setBounds(50,0,700,680);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Container con = this.getContentPane(); // inherit main frame
         con.setLayout(new BorderLayout(5,5));
         //   con.add(new JLabel(reka),BorderLayout.CENTER);
         con.add(pane,BorderLayout.SOUTH);
-        this.setIconImage(turtuleIcoon.getImage());
+        this.setIconImage(turtuleIcon.getImage());
         con.setVisible(true);
         start.addActionListener(this);// register button listener
         quit.addActionListener(this);
@@ -44,17 +44,21 @@ public class WelcomeScreen extends JFrame implements ActionListener
         System.out.println(mo);
         switch (event.getActionCommand()){
             case "START":
-                new GameFrame();
-              //  new Level();
+                new GameMainFrame();
              break;
             case "OPTIONS":
-                new OP();
+              //  currentUserConfiguration = new MatchConfig();
+               // OP userOptions = new OP();
+                //System.out.println(currentUserConfiguration.toString());
+                new GameMainFrame();
+                //TODO: make the options run the difference types of games
                // optionPane = new JOptionPane();
                 //JOptionPane.showMessageDialog(null,"CHOOSE GAME OPTIONS:");
                // setVisible(true);
                 break;
             case "QUIT":
-                new GameMainFrame();
+                //TODO: after options works change back to quit
+                new GameFrame();
                // System.exit(1);
                 break;
         }

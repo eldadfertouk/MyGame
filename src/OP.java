@@ -14,16 +14,18 @@ public class OP extends JFrame implements ActionListener , ChangeListener {
     private int MAX_AMMO, MAX_TARGETS;
     private JFrame optionFrame;
     private JPanel optionPanel, dataPanel, labelsPanel, buttonsPanel;
-    private Dimension labelsDimension = new Dimension(100, 25);
-    private Dimension slidersDimension = new Dimension(100, 25);
-    private Dimension textFields = new Dimension(100, 25);
-    private Dimension buttonsDimension = new Dimension(95, 25);
-    private Dimension dataPanelDimension = new Dimension(550, 200);
-    private Dimension labelsPanelDimension = new Dimension(550, 200);
+    private final Dimension labelsDimension = new Dimension(100, 25);
+    private final Dimension slidersDimension = new Dimension(100, 25);
+    private final Dimension textFields = new Dimension(100, 25);
+    private final Dimension buttonsDimension = new Dimension(95, 25);
+    private final Dimension dataPanelDimension = new Dimension(550, 200);
+    private final Dimension labelsPanelDimension = new Dimension(550, 200);
     private JSpinner maxLives;
     private JSlider ammoSlider;
     private JSlider targetSlider;
-    private JLabel lives, ammo, targets, difficulty;
+    private JLabel ammo;
+    private JLabel targets;
+    private JLabel difficulty;
     private JTextField difficultyText, ammoText, targetText;
     private Font font = new Font("ariel", Font.BOLD, 20);
     private JButton go, quit, reset;
@@ -74,8 +76,9 @@ public class OP extends JFrame implements ActionListener , ChangeListener {
         System.out.println(e.paramString());
         if (e.getSource() == go) {
             System.out.println("GOGOGOGOG");
-            matchConfig = new MatchConfig(1,1,1, 5, MAX_AMMO,MAX_TARGETS);
+            matchConfig = new MatchConfig(maxLives.getValue().hashCode(),3,4, 3, MAX_AMMO,MAX_TARGETS);
             Level game = new Level(matchConfig);
+
         } else if (e.getSource() == reset) {
             System.out.println("RESET");
             MAX_AMMO = 5;
@@ -109,7 +112,7 @@ public class OP extends JFrame implements ActionListener , ChangeListener {
         labelsPanel.setVisible(true);
         labelsPanel.setLocation(0, 0);
         labelsPanel.setFont(font);
-        lives = new JLabel("LIVES", SwingConstants.CENTER);
+        JLabel lives = new JLabel("LIVES", SwingConstants.CENTER);
         lives.setPreferredSize(labelsDimension);
         lives.setFont(font);
 
@@ -129,12 +132,14 @@ public class OP extends JFrame implements ActionListener , ChangeListener {
         difficulty.setForeground(Color.BLUE);
         difficulty.setFont(font);
         difficulty.setVisible(true);
+
         lives.setForeground(Color.BLUE);
         lives.setVisible(true);
         labelsPanel.add(lives,0);
         labelsPanel.add(ammo, 1);
         labelsPanel.add(targets, 2);
         labelsPanel.add(difficulty, 3);
+
     }
     private void BuildDataPanel(){
         FlowLayout flowDataLayout= new FlowLayout(FlowLayout.LEADING,25,25);
@@ -197,7 +202,6 @@ public class OP extends JFrame implements ActionListener , ChangeListener {
         FlowLayout flowButtonsLayout= new FlowLayout(FlowLayout.LEADING,35,25);
         buttonsPanel = new JPanel(flowButtonsLayout);
         buttonsPanel.setSize(dataPanelDimension);
-
         go = new JButton("GO");
         reset = new JButton("RESET");
         quit = new JButton("QUIT");
@@ -221,6 +225,7 @@ public class OP extends JFrame implements ActionListener , ChangeListener {
      */
     @Override
     public void stateChanged(ChangeEvent e) {
+
         difficultyText.setText(difficultyLevelPanel.getDifficultyLevel());
     }
 }

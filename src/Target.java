@@ -19,7 +19,7 @@ public class Target extends JPanel implements MouseListener {
         this.targetId=targetNumber;
         this.targetsContainer = new Container();
         this.targetsContainer.setLayout(new GridLayout(1,1,800,500));
-        this.targetIcon = new ImageIcon(this.getClass().getResource("/images/targets/defaulttarget.png"));
+        this.targetIcon = new ImageIcon(this.getClass().getResource("/images/targets/targeticon.png"));
         this.targetX = new Random().nextInt((860)+100);
         this.targetY = new Random().nextInt((500)+100);
         Point p1=new Point(targetX,targetY);
@@ -62,24 +62,24 @@ public class Target extends JPanel implements MouseListener {
 
     }
 
-    public Target(String targetType,int targetsQountity,boolean move){
+    public Target(String targetType,int targetsQuantity,boolean move){
 
-        for (int i=targetsQountity;i >=0;i--){
+        for (int i=targetsQuantity;i >=0;i--){
             if(move){
                 this.isMovingTarget=true;
             }
         switch (targetType){
-            case "defaulttarget":
-                this.targetIcon =  new ImageIcon(this.getClass().getResource("/images/targets/targeticon.png"));
+            case "classictarget":
+                this.targetIcon =  new ImageIcon(this.getClass().getResource("/images/targets/classictarget.png"));
                 break;
             case "balloon":
                this.targetIcon =  new ImageIcon(this.getClass().getResource("/images/targets/blueballoonsmal.png"));
                 break;
-            case "flyingballon":
-                this.targetIcon =  new ImageIcon(this.getClass().getResource("/images/targets/flyingballoon.png"));
+            case "hotairballoon":
+                this.targetIcon =  new ImageIcon(this.getClass().getResource("/images/targets/hotairballoon.png"));
                 break;
-            case "airplain":
-              this.targetIcon = new ImageIcon(this.getClass().getResource("/images/targets/airplain.gif"));
+            case "airplane":
+              this.targetIcon = new ImageIcon(this.getClass().getResource("/images/targets/airplane.gif"));
                 break;
         }
         }
@@ -173,7 +173,7 @@ public class Target extends JPanel implements MouseListener {
         int y1=this.targetLocation.getyCordinta();
         Rectangle s = new Rectangle(e.getLocationOnScreen());
         if (s.contains(targetLocation)){
-            System.out.println("ffdgdfgdfgdffdgdfg");
+            System.out.println("BOOL ON TARGET");
             this.setRadarLockOn(true);
         }
     }

@@ -20,7 +20,7 @@ public class BackGround extends JPanel {
                 backgroundIcon = new ImageIcon(getClass().getResource("images/backgrounds/senddune.gif"));
                 break;
             case 2:
-                backgroundIcon = new ImageIcon(getClass().getResource("images/backgrounds/backgrounddesrtsk.gif"));
+                backgroundIcon = new ImageIcon(getClass().getResource("images/backgrounds/backgrounddesrtsky.gif"));
                 break;
             case 3:
                 backgroundIcon = new ImageIcon(getClass().getResource("images/backgrounds/backgrounddesert.gif"));
@@ -30,6 +30,9 @@ public class BackGround extends JPanel {
                 break;
             case 5:
                 backgroundIcon = new ImageIcon(getClass().getResource("images/backgrounds/background.gif"));
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + level);
         }
 
     }

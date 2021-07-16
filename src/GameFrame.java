@@ -14,6 +14,7 @@ public class GameFrame extends JFrame{
         this.pack();
     }
     public static void main(String[] args) {
+
         new WelcomeScreen();
 
     }

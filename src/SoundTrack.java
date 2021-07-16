@@ -17,39 +17,37 @@ public class SoundTrack extends JFrame implements Soundbank {
         try {
             switch (soundtype) {
                 case "wind":
-                    soundfile = new File("C:\\Users\\Eldad Fertouk\\Downloads\\MyGame\\src\\wav\\windblow.wav");
+                    soundfile = new File("C:\\Users\\User\\IdeaProjects\\MyGame\\src\\wav\\windblow.wav");
                     break;
                 case "inflate":
-                    soundfile = new File("C:\\Users\\Eldad Fertouk\\Downloads\\MyGame\\src\\wav\\Ballooninflating.wav");
+                    soundfile = new File("C:\\Users\\User\\IdeaProjects\\MyGame\\src\\wav\\Ballooninflating.wav");
                     break;
                 case "shoot":
-                    soundfile = new File("C:\\Users\\Eldad Fertouk\\Downloads\\MyGame\\src\\wav\\arrowshotshort.wav");
+                    soundfile = new File("C:\\Users\\User\\IdeaProjects\\MyGame\\src\\wav\\arrowshotshort.wav");
                     break;
                 case "boom":
-                    soundfile = new File("C:\\Users\\Eldad Fertouk\\Downloads\\MyGame\\src\\wav\\BalloonPopping.wav");
+                    soundfile = new File("C:\\Users\\User\\IdeaProjects\\MyGame\\src\\wav\\BalloonPopping.wav");
                     break;
                 case "pop":
-                    soundfile = new File("C:\\Users\\Eldad Fertouk\\Downloads\\MyGame\\src\\wav\\popsound.wav");
+                    soundfile = new File("C:\\Users\\User\\IdeaProjects\\MyGame\\src\\wav\\popsound.wav");
                     break;
                 case "wee":
-                    soundfile = new File("C:\\Users\\Eldad Fertouk\\Downloads\\MyGame\\src\\wav\\movesound.wav");
+                    soundfile = new File("C:\\Users\\User\\IdeaProjects\\MyGame\\src\\wav\\movesound.wav");
                     break;
                 case "eew":
-                    soundfile = new File("C:\\Users\\Eldad Fertouk\\Downloads\\MyGame\\src\\wav\\eewsound.wav");
+                    soundfile = new File("C:\\Users\\User\\IdeaProjects\\MyGame\\src\\wav\\eewsound.wav");
                     break;
                 // Open an audio input stream.
             }
-            AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundfile);
-            // Get a sound clip resource.
-            Clip clip = AudioSystem.getClip();
-            // Open audio clip and load samples from the audio input stream.
-            clip.open(audioIn);
+            Clip clip;
+            try (AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundfile)) {
+                // Get a sound clip resource.
+                clip = AudioSystem.getClip();
+                // Open audio clip and load samples from the audio input stream.
+                clip.open(audioIn);
+            }
             clip.start();
-        } catch (UnsupportedAudioFileException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (LineUnavailableException e) {
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
             e.printStackTrace();
         }
     }

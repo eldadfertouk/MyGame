@@ -3,13 +3,14 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+
 public class Munitions extends JPanel{
-    public static int TOTAL_MUNIION=50;
+    public static int TOTAL_MUNITION=50;
     public String ammoType;
     public int ammoFired,damage,ammoSpeed,radiusDamage,Xammo,Yammo;
     public ImageIcon ammoIcon;
     public Point ammoStartLocation,ammoDestination,ammoCurrentLocation,warHeadTipPoint;
-    public HashSet projectilePath;
+    public HashSet<Point> projectilePath;
 
     public Munitions(){
         this.ammoIcon = new ImageIcon(this.getClass().getResource("/images/munition/rocketrolldefualt.gif"));
@@ -22,7 +23,7 @@ public class Munitions extends JPanel{
      return warHeadTipPoint;
     }
     public Munitions(String ammoType){
-        while (ammoType!=null){
+
             switch (ammoType){
                 case "arrow":
                     this.ammoIcon=new ImageIcon(this.getClass().getResource("/images/munition/uparrowfinal.gif"));
@@ -31,17 +32,16 @@ public class Munitions extends JPanel{
                     this.ammoIcon=new ImageIcon(this.getClass().getResource("/images/munition/missilesmall.png"));
                     break;
                 case "atombomb":
-                    this.ammoIcon=new ImageIcon(this.getClass().getResource("/images/munition/atombombU.gif"));
+                    this.ammoIcon=new ImageIcon(this.getClass().getResource("/images/munition/atombomb.gif"));
                     break;
                 case "rocket":
                     this.ammoIcon=new ImageIcon(this.getClass().getResource("/images/munition/rocketroll.gif"));
                     break;
-
             }
             this.ammoIcon = new ImageIcon(this.getClass().getResource("/images/munition/missilesmall.png"));
             ammoCurrentLocation = new Point(Xammo,Yammo);
             ammoDestination = new Point(400,5);
-        }
+
     }
     public void MunitionsUse(Munitions ammo,Point start,Point destination){
         ammoStartLocation=start;
@@ -57,7 +57,7 @@ public class Munitions extends JPanel{
     public Munitions(Point ammoStartLocation, Point ammoDestination, Point ammoLoaction, Point warHeadTipPoint) {
 
     }
-    public HashSet getProjectilePath(Munitions ammo,Point StartLocation,Point destination){
+    public HashSet<Point> getProjectilePath(Munitions ammo, Point StartLocation, Point destination){
         this.ammoStartLocation=ammoStartLocation;
         this.ammoDestination=destination;
         this.setProjectilePath(ammoStartLocation,ammoDestination);
@@ -87,14 +87,31 @@ public class Munitions extends JPanel{
         this.setAmmoFired(+1);
 
     }
-    public HashSet setProjectilePath (Point player,Point target){
+    public List<Point> Rockets_ProjectilePath (Point player,Point target){
+        List<Point> rocketProjectile = new ArrayList<>();
+        int x1=(int)player.getX();
+        int y1=(int)player.getY();
+        int x2=(int)target.getX();
+        int y2=(int)target.getY();
+        int m=(x1-x2)/(y1-y2);
+        int Sx = Math.abs(x1-x2),Sy = Math.abs(y1-y2);
+            for (int i = x1 ; i <= x2; i++){
+                for (int j = y1;j<=y2; j++){
+                Point p = new Point(i,j);
+                rocketProjectile.add(p);
+                }
+        }
+
+        return rocketProjectile;
+    }
+    public HashSet<Point> setProjectilePath (Point player, Point target){
         int x1=(int)player.getX();
         int y1=(int)player.getY();
         int x2=(int)target.getX();
         int y2=(int)target.getY();
         int m;
         m=(x1-x2)/(y1-y2);
-        projectilePath = new HashSet<Point>();
+        projectilePath = new HashSet<>();
         //set balistik up
         if (m==0) {
                 int yy = y1-y2;
@@ -116,6 +133,7 @@ public class Munitions extends JPanel{
 
         return projectilePath;
     }
+
     public Munitions(String ammoType, int ammoFired, int damage, int ammoSpeed, ImageIcon ammoIcon, Point ammoLocation) {
         this.ammoType = ammoType;
         this.ammoFired = ammoFired;
