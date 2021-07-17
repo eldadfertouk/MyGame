@@ -12,16 +12,17 @@ import static java.lang.Thread.sleep;
 public class GameBase extends JPanel {
     public int SCREEN_WIDTH = 960;
     public int SCREEN_HIGHT = 720;
-    public int BALOON_COUNT = 50;
+    public int TARGETS_COUNT = 50;
     public int AMMO_COUNT = 50;
     private boolean impact = false;
     private int turtleWidth,playerWidh,playerHight,turtlehight;
-    private int balloonSpeed = 350,turtulespeed = 5,arrowSpeed=1,score=0,shotsFierd=0;
+    private int targetSpeed = 350,turtulespeed = 5,arrowSpeed=1,score=0,shotsFierd=0;
     private int keyPressed;
     private String direction = "right";
     private List<Target> targetList;
-    private List <Balloon> balloons;
-    private List <Arrow> ammo;
+
+    private List <Munitions> ammo;
+
     private Turtle player;
     private Explosion explosion;
     private MovementListener mahazin;
@@ -40,7 +41,6 @@ public class GameBase extends JPanel {
         gameborad = new BackGround();
         player = new Turtle();
         explosion = new Explosion(0, 0);
-        balloons = new ArrayList <>();
         targetList = new ArrayList <>();
         ammo = new ArrayList <>();
         mouse = new Mouse();
@@ -50,17 +50,17 @@ public class GameBase extends JPanel {
         keyMazin = new KeyMazin();
         this.addKeyListener(keyMazin);
         keyPressed = keyMazin.getKeyCode();
-        for (int i = 0; i < BALOON_COUNT; i++) {
-            Target target = new Target();
+        for (int i = 0; i < TARGETS_COUNT; i++) {
+            Target target = new Target("hotairballoon",50,true);
             targetList.add(target);
-            Balloon balloon = new Balloon(i);
-            balloons.add(balloon);
+//            Balloon balloon = new Balloon(i);
+//            balloons.add(balloon);
             this.setVisible(true);
         }
         // create ammo
         for (int a = 0; a < AMMO_COUNT; a++) {
-            Arrow arrow = new Arrow();
-            ammo.add(arrow);
+            Munitions round = new Munitions("rocket");
+            ammo.add(round);
         }
         this.setVisible(true);
         //sound track
@@ -75,13 +75,13 @@ public class GameBase extends JPanel {
             }
         }).start();
         //arrow
-        //  int mikum = player.getXTurtle();
+        //Munition
         new Thread(() -> {
             try {
-                while (ammo.size()>-1) {
+                while (!ammo.isEmpty()) {
                     switch (shoot.getClick()) {
                         case 1:
-                            ammo.get(0).ShootAnArrow(ammo.get(0).getXArrow());
+                            ammo.get(0).MunitionUse(ammo.get(0),player.playerStartPoint,impactpoint);
                             shotsFierd += 1;
                             break;
                         case 2:
@@ -89,7 +89,7 @@ public class GameBase extends JPanel {
                         case 3:
                             break;
                     }
-                    if (ammo.get(0).getyArrowCordinta() < -10) {
+                    if (ammo.get(0).ammoCurrentLocation.getY() < -10) {
                         shoot.setClick(0);
                         ammo.remove(0);
                     }
@@ -103,25 +103,21 @@ public class GameBase extends JPanel {
 
         new Thread(() -> {
             try {
-                while (!balloons.isEmpty()) {
+                while (!targetList.isEmpty()) {
                     for (Target target:this.targetList) {
                         target.TargetMoveRandom();
                     }
                     repaint();
-                    for (Balloon balloon : this.balloons) {
-                        balloon.moveBalloon();
-                    }
-                    repaint();
-                    sleep(balloonSpeed);
+                    sleep(targetSpeed);
                     //remove balloons from screen
-                    if (balloonSpeed < 50) {
-                        if (balloons.size()>=1){
-                            balloons.remove(0);
+                    if (targetSpeed < 50) {
+                        if (!targetList.isEmpty()){
+                            targetList.remove(0);
                         }
                     }
                     // speed up balloon movement
-                    if (balloonSpeed > 10) {
-                        balloonSpeed -= 1;
+                    if (targetSpeed > 10) {
+                        targetSpeed -= 1;
                     }
                 }
             } catch (InterruptedException e) {
@@ -146,8 +142,8 @@ public class GameBase extends JPanel {
         String scoreText = ""+score;
         scoresField = new JTextField(scoreText+"");
         billboardPanel.setScoreText(scoresField);
-        String balloonsLeft=""+balloons.size();
-        targetsField = new JTextField(balloonsLeft);
+        String targetsLeft=""+targetList.size();
+        targetsField = new JTextField(targetsLeft);
         billboardPanel.setTargetsText(targetsField);
     }
 
@@ -161,8 +157,8 @@ public class GameBase extends JPanel {
         billboardPanel.setAmmoText(ammoField);
         String scoreText = "" + score;
         scoresField.setText(scoreText + "         ");
-        String balloonsLeft = "" + balloons.size();
-        targetsField.setText(balloonsLeft + "      ");
+        String targetsLeft = "" + targetList.size();
+        targetsField.setText(targetsLeft + "      ");
         this.add(billboardPanel, -1);
         gameborad.getBackgroundIcon().paintIcon(this, page, 0, 0);
         int ammoNumber = 0;
@@ -171,17 +167,15 @@ public class GameBase extends JPanel {
         int x1 = player.getPlayerX();
         //  int x = ammo.get(1).getXArrow();
         while (ammoNumber < ammo.size()) {
-            ammo.get(ammoNumber).setXArrow(x1);
             int i1 = 1;
-            while (i < balloons.size() && i1 < targetList.size()) {
+            while (i < ammo.size() && i1 < targetList.size()) {
                 impact = false;
                 targetList.get(i1).getTargetIcon().paintIcon(this, page, targetList.get(i1).getTargetLocation().getxCordinta(), targetList.get(i1).getTargetLocation().getyCordinta());
-                balloons.get(i).getBalloon().paintIcon(this, page, balloons.get(i).getTargetLocation().getxCordinta(), balloons.get(i).getTargetLocation().getyCordinta());
-                ammo.get(ammoNumber).getArrow().paintIcon(this, page, ammo.get(ammoNumber).getXArrow(), ammo.get(ammoNumber).getyArrowCordinta());
+                ammo.get(ammoNumber).ammoIcon.paintIcon(this, page, ammo.get(ammoNumber).getX() , ammo.get(ammoNumber).getY());
                 int targetIconW = targetList.get(i1).getTargetIcon().getIconWidth();
                 int targetIconH = targetList.get(i1).getTargetIcon().getIconHeight();
                 Point targetPoint = new Point(targetList.get(i1).getTargetLocation().getxCordinta(), targetList.get(i1).getTargetLocation().getyCordinta());
-                Point warHeadPoint = new Point(ammo.get(ammoNumber).getXArrow() + 45, ammo.get(ammoNumber).getyArrowCordinta() + 3);
+                Point warHeadPoint = new Point(ammo.get(ammoNumber).getX() + 45, ammo.get(ammoNumber).getY() + 3);
                 if (warHeadPoint.PointImpact(targetPoint, targetIconW, targetIconH, warHeadPoint)) {
                     impact = true;
                     score += 100;
@@ -193,22 +187,21 @@ public class GameBase extends JPanel {
                     targetList.remove(i1);
                 }
                 impact = false;
-                Point balloonPoint = new Point(balloons.get(i).getTargetLocation().getxCordinta(), balloons.get(i).getTargetLocation().getyCordinta());
-                Point arrowtip = new Point(ammo.get(ammoNumber).getXArrow() + 45, ammo.get(ammoNumber).getyArrowCordinta() + 3);
-                int ballooniconwidth = balloons.get(i).getTargetIcon().getIconWidth();
-                int ballooniconhight = balloons.get(i).getTargetIcon().getIconHeight();
-                int bx = balloons.get(i).getTargetLocation().getxCordinta();
-                int by = balloons.get(i).getTargetLocation().getyCordinta();
-                if (arrowtip.PointImpact(balloonPoint, ballooniconwidth, ballooniconhight, arrowtip)) {
-                    score += 49;
+                Point arrowtip = new Point(ammo.get(ammoNumber).getX() + 45, ammo.get(ammoNumber).getY() + 3);
+                int targeticonwith= targetList.get(i).getTargetIcon().getIconWidth();
+                int targeticonhight = targetList.get(i).getTargetIcon().getIconHeight();
+                int tx = targetList.get(i).getTargetLocation().getxCordinta();
+                int ty = targetList.get(i).getTargetLocation().getyCordinta();
+                if (arrowtip.PointImpact(targetPoint, targetIconW, targeticonhight, arrowtip)) {
+                    score += 50;
                     System.out.println("SCORE:" + score);
                     impact = true;
-                    impactpoint = new Point(balloonPoint.getxCordinta(),balloonPoint.getyCordinta());
+                    impactpoint = new Point(targetPoint.getxCordinta(),targetPoint.getyCordinta());
                     explosion.getExplosionIcon().paintIcon(this, page, impactpoint.getxCordinta(), impactpoint.getyCordinta());
                     SoundTrack boom = new SoundTrack();
                     boom.SoundTrack("boom");
                     this.repaint();
-                    balloons.remove(i1);
+                    targetList.remove(i1);
                 }
                 impact = false;
                 i++;
