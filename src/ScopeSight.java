@@ -7,7 +7,6 @@ public class ScopeSight extends JPanel implements MouseMotionListener {
     public ImageIcon radarLockon=new ImageIcon(this.getClass().getResource("/images/wepon/radarlockon.gif"));
     public Point scopeLocation;
 
-
     public ScopeSight(){
 
     }
@@ -46,6 +45,9 @@ public class ScopeSight extends JPanel implements MouseMotionListener {
     public void setRadarLockon(ImageIcon radarLockon) {
         this.radarLockon = radarLockon;
     }
+
+
+
 
     @Override
     public void mouseDragged(MouseEvent e) {

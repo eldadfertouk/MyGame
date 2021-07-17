@@ -1,13 +1,20 @@
+import java.awt.*;
 import java.awt.event.*;
+//TODO:buils mouse clicket metode
 
 class Mouse implements MouseMotionListener {
     private int xMouseCordinta;
     private int yMouseCordinta;
 
+    private boolean isClicked;
+
+
     public Mouse()
     {
+
     setxMouseCordinta(getxMouseCordinta());
     setyMouseCordinta(getyMouseCordinta());
+
     }
 
     public void mouseDragged(MouseEvent e)

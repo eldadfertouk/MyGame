@@ -121,6 +121,7 @@ public class GamePanel extends JPanel {
                     }
                 }
             } catch (InterruptedException e) {
+                Thread.dumpStack();
             }
         }).start();
 //keyboard listener
@@ -271,6 +272,11 @@ public class GamePanel extends JPanel {
         this.requestFocus();
         }
 public static void main(String[] args){
+        while (args.length>0){
+            for (int i = 0; i<args.length;i++)
+                System.out.println(args[i]);
+
+        }
         GamePanel gamePanel = new GamePanel();
 }
     }

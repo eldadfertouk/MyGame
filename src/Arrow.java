@@ -3,18 +3,16 @@
 import javax.swing.*;
 
 public class Arrow extends Munitions  {
-
     private ImageIcon arrowIcon=new ImageIcon(this.getClass().getResource("/images/munition/uparrowfinal.gif"));
     private int XArrow =426;
     private int yArrowCordinta =630;
     private Point arrowPoint,arrowLocation;
     private static int arrowsFierd = 0;
-
-
     public Arrow(){
         super();
         super.setAmmoIcon(ammoIcon);
-        //this.arrowIcon = new ImageIcon(this.getClass().getResource("/images/munition/uparrowfinal.gif"));
+        //TODO:chech this part
+        this.arrowIcon = new ImageIcon(this.getClass().getResource("/images/munition/uparrowfinal.gif"));
         arrowPoint = new Point((this.getX()-this.getWidth()/2),(this.getY()+5));
         super.setWarHeadTipPoint(arrowPoint);
     }

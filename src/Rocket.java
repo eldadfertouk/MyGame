@@ -4,10 +4,11 @@ public class Rocket extends Munitions{
     private ImageIcon rocketIcon=new ImageIcon(this.getClass().getResource("/images/munition/rocketrolldefualt.gif"));
     private int rocketX=500,rocketY=800,ammoFired=0,damage=50,ammoSpeed=1,radiusDamage=250;
     private Point rocketLocation=new Point(rocketX,rocketY);
+    private Point targetLocation=new Point();
 
     public Rocket(){
         super.setAmmoType("Rocket");
-        super.setAmmoIcon(rocketIcon=new ImageIcon(this.getClass().getResource("/images/munition/rocketrolldefualt.gif")));
+        this.setAmmoIcon(rocketIcon=new ImageIcon(this.getClass().getResource("/images/munition/rocketrolldefualt.gif")));
         super.setDamage(damage);
         super.setStartLocation(rocketLocation);
         super.setRadiusDamage(radiusDamage);
@@ -15,6 +16,7 @@ public class Rocket extends Munitions{
         super.setAmmoFired(ammoFired);
         super.setWarHeadTipPoint(new Point(this.getAmmoIcon().getIconWidth() +9, this.getAmmoIcon().getIconHeight() +4));
     }
+    //TODO:finisih the metodes of this class
     public void RocketLunch(Point pl,Point dl){
         int px= (int)pl.getX();
         int py=(int)pl.getY();
@@ -25,6 +27,13 @@ public class Rocket extends Munitions{
         this.rocketY-=1;
         if (d%5==0){
             super.setSize(this.getAmmoIcon().getIconWidth()-2,this.getAmmoIcon().getIconHeight()-2);
+        }
+        this.rocketLocation.setLocation(pl.getX(),pl.getY());
+        while (rocketY>0 && rocketX >0){
+            for (int i=pl.getxCordinta();i<targetLocation.getxCordinta();i++){
+                this.rocketX +=1;
+                this.rocketY +=1;
+            }
         }
         }
 

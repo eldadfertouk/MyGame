@@ -48,10 +48,7 @@ public class Balloon extends Target{
 
     public void setBalloonIcon(ImageIcon balloonIcon, String balloonColor)
     {
-        while (true) {
-            if (balloonColor == "null") break;
-            ;
-        }
+        while (!balloonColor.equals("null")) ;
         switch (balloonColor){
             case "red":
                 this.balloonIcon = new ImageIcon(this.getClass().getResource("/images/targets/redballoon.png"));
@@ -69,8 +66,10 @@ public class Balloon extends Target{
                 this.balloonIcon= new ImageIcon(this.getClass().getResource("/images/targets/purpleballoon.png"));
                 break;
         }
-        if (balloonColor=="null"){
-            this.balloonIcon=new ImageIcon(this.getClass().getResource("/images/targets/redtransperntredballoon.gif"));
+        switch (balloonColor) {
+            case "null":
+                this.balloonIcon = new ImageIcon(this.getClass().getResource("/images/targets/redtransperntredballoon.gif"));
+                break;
         }
     }
 
