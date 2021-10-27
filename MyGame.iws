@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1018b34e-7aab-448f-9cd6-62826422dc73" name="Default Changelist" comment="gameBase has the model for game frame" />
+    <list default="true" id="1018b34e-7aab-448f-9cd6-62826422dc73" name="Default Changelist" comment="gameBase has the model for game frame">
+      <change beforePath="$PROJECT_DIR$/MyGame.iws" beforeDir="false" afterPath="$PROJECT_DIR$/MyGame.iws" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -117,7 +119,13 @@
       <option name="presentableId" value="LOCAL‎00003" />
       <updated>1626462841904</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL‎00004" summary="gameBase has the model for game frame">
+      <created>1635367035500</created>
+      <option name="number" value="LOCAL‎00004" />
+      <option name="presentableId" value="LOCAL‎00004" />
+      <updated>1635367035500</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -136,7 +144,8 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="eldad update to 15" />
     <MESSAGE value="so far good" />
-    <option name="LAST_COMMIT_MESSAGE" value="so far good" />
+    <MESSAGE value="gameBase has the model for game frame" />
+    <option name="LAST_COMMIT_MESSAGE" value="gameBase has the model for game frame" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
