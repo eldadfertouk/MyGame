@@ -11,31 +11,32 @@ import javax.swing.*;
 // Hence, we use a Swing application.
 public class SoundTrack extends JFrame implements Soundbank {
     private String soundtype;
+    private String sourcePath = "D:\\Users\\Eldad Fertouk\\MyGame\\src\\wav\\";
     private File soundfile;
     public void SoundTrack(String soundeffect) {
         soundtype = soundeffect;
         try {
             switch (soundtype) {
                 case "wind":
-                    soundfile = new File("C:\\Users\\User\\IdeaProjects\\MyGame\\src\\wav\\windblow.wav");
+                    soundfile = new File(sourcePath+"windblow.wav");
                     break;
                 case "inflate":
-                    soundfile = new File("C:\\Users\\User\\IdeaProjects\\MyGame\\src\\wav\\Ballooninflating.wav");
+                    soundfile = new File(sourcePath+"Ballooninflating.wav");
                     break;
                 case "shoot":
-                    soundfile = new File("C:\\Users\\User\\IdeaProjects\\MyGame\\src\\wav\\arrowshotshort.wav");
+                    soundfile = new File(sourcePath+"arrowshotshort.wav");
                     break;
                 case "boom":
-                    soundfile = new File("C:\\Users\\User\\IdeaProjects\\MyGame\\src\\wav\\BalloonPopping.wav");
+                    soundfile = new File(sourcePath+"BalloonPopping.wav");
                     break;
                 case "pop":
-                    soundfile = new File("C:\\Users\\User\\IdeaProjects\\MyGame\\src\\wav\\popsound.wav");
+                    soundfile = new File(sourcePath+"popsound.wav");
                     break;
                 case "wee":
-                    soundfile = new File("C:\\Users\\User\\IdeaProjects\\MyGame\\src\\wav\\movesound.wav");
+                    soundfile = new File(sourcePath+"movesound.wav");
                     break;
                 case "eew":
-                    soundfile = new File("C:\\Users\\User\\IdeaProjects\\MyGame\\src\\wav\\eewsound.wav");
+                    soundfile = new File(sourcePath+"eewsound.wav");
                     break;
                 // Open an audio input stream.
             }

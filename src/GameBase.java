@@ -1,10 +1,7 @@
-import sun.jvm.hotspot.runtime.JavaThread;
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-
 
 import static java.lang.Thread.sleep;
 //todo: build one level with threads
